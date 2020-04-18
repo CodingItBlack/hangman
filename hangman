@@ -1,0 +1,54 @@
+import random
+
+word_number = random.randint(0, 3)
+winning_words = ['python', 'java', 'kotlin', 'javascript']
+hint = list('')
+winning_word = winning_words[word_number]
+word = list(winning_word)
+counter = 0
+found = set()
+
+for i in range(len(winning_word)):
+    hint += '-'
+
+print('H A N G M A N')
+
+while True:
+    menu = input('Type "play" to play the game, "exit" to quit: ')
+    if menu == 'play':
+        break
+    elif menu == 'exit':
+        exit()
+
+while True:
+    print()
+    print("".join(hint))
+    guess = input('Input a letter: ')
+
+    if len(guess) == 1:
+        if guess.isalpha() and guess.islower():
+            if guess in word and guess not in found:
+                for i in range(len(word)):
+                    if word[i] == guess:
+                        hint[i] = guess
+                        found.add(guess)
+            elif guess in found:
+                print('You already typed this letter.')
+                found.add(guess)
+            elif guess not in word:
+                found.add(guess)
+                print('No such letter in the word.')
+                counter += 1
+
+            if counter == 8:
+                print('You are hanged!')
+                break
+            elif hint == word:
+                print("".join(hint))
+                print('You guessed the word!')
+                print('You survived!')
+                break
+        else:
+            print('It is not an ASCII lowercase letter.')
+    else:
+        print('You should print a single letter.')
